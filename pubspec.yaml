@@ -81,3 +81,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+patrol:
+  app_name: Quit Smoking
+  android:
+    package_name: com.jmsc.quitsmoke
+  ios:
+    bundle_id: com.jmsc.quitsmoke
+    app_name: Quit Smoking
