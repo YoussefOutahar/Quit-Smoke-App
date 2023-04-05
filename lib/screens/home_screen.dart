@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   showAlertDialog(BuildContext context) {
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "${langs[lang]["home"]["cancel"]}",
       ),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.of(context).pop();
       },
     );
-    Widget helpButton = FlatButton(
+    Widget helpButton = TextButton(
       child: Text(
         "${langs[lang]["guide"]["ifyouslip"]["title"]}",
       ),
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }));
       },
     );
-    Widget helpButton2 = FlatButton(
+    Widget helpButton2 = TextButton(
       child: Text(
         "${langs[lang]["guide"]["managecravings"]["title"]}",
       ),
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }));
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "${langs[lang]["home"]["reset"]}",
         style: TextStyle(color: Colors.red),
