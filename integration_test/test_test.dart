@@ -1,6 +1,7 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:patrol/patrol.dart';
 import 'package:quitsmoke/main.dart';
+import 'package:quitsmoke/patrol_keys.dart';
 
 void main() {
   patrolTest(
@@ -8,14 +9,22 @@ void main() {
     (PatrolTester $) async {
       await prepare();
       await $.pumpWidgetAndSettle(MyApp());
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
+      await $(K.quittingReasonTextField).enterText('quitting reason');
+      await $(K.addReasonButton).tap();
+      await $.native.pressBack();
+      await $(K.nextButton).tap();
 
-      // prepare network conditions
-      await $.native.enableCellular();
+      await $(TextFormField).at(0).enterText('5');
+      await $(TextFormField).at(1).enterText('1');
+      await $(DropdownButton<String>).tap();
+      await $(DropdownMenuItem<String>).$(RegExp(r'Euro')).tap();
+      await $(K.nextButton).tap(andSettle: false);
+
+      await $(K.startNowButton).waitUntilVisible().tap(andSettle: false);
+
+      await $(Key('text')).waitUntilVisible();
     },
     nativeAutomation: true,
+    //framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.fullyLive,
   );
 }
