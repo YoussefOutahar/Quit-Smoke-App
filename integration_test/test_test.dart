@@ -25,6 +25,5 @@ void main() {
       await $(Key('text')).waitUntilVisible();
     },
     nativeAutomation: true,
-    //framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.fullyLive,
   );
 }
