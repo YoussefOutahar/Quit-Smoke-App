@@ -22,7 +22,7 @@ void main() {
 
       await $(K.startNowButton).waitUntilVisible().tap(andSettle: false);
 
-      await $(Key('text')).waitUntilVisible();
+      await $(#text).waitUntilVisible();
     },
     nativeAutomation: true,
   );
