@@ -109,8 +109,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         myController.clear();
                         setState(() {});
                       },
-                      child: Text(
-                          "\u{2795} ${langs[lang]["welcome"]["addtolist"]}"))
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add),
+                          Text("${langs[lang]["welcome"]["addtolist"]}"),
+                        ],
+                      ))
                 ],
               ),
               Expanded(
