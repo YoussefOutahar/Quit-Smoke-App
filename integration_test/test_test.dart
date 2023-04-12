@@ -17,7 +17,8 @@ void main() {
       await $(TextField).enterText('quitting reason');
       await $('Add to list').tap();
       await $.native.pressBack();
-      await $(#nextButton).tap();
+      await $(IconButton).at(1).tap();
+      //await $(#nextButton).tap();
 
       await $(TextFormField).at(0).enterText('5');
       await $(TextFormField).at(1).enterText('1');
