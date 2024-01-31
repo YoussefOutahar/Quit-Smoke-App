@@ -60,7 +60,12 @@ class _GoogleNativeAdState extends State<GoogleNativeAd> {
       ? Padding(
           padding: const EdgeInsets.all(8.0),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 350, minWidth: 100),
+            constraints: const BoxConstraints(
+              maxHeight: 380,
+              maxWidth: 380,
+              minWidth: 320,
+              minHeight: 320
+            ),
             child: AdWidget(ad: _nativeAd!)
           ),
         ): _isLoading ? const CircularProgressIndicator() : const SizedBox(),
