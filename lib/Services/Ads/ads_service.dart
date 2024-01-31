@@ -15,7 +15,12 @@ class AdsService {
 
   get bannerAd => BannerAdWidget(adUnitId: bannerAdUnitId);
 
-  get nativeAd => GoogleNativeAd(adUitId: nativeAdUnitId);
+  nativeAd({required TemplateType templateType}) {
+    return GoogleNativeAd(
+      adUitId: nativeAdUnitId,
+      templateType: templateType,
+    );
+  }
 
   Future<void> loadInterstitial(
     {

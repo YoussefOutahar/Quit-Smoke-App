@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key, required this.adUnitId});
@@ -53,7 +54,23 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
             )
           : _isDisposed
               ? const SizedBox()
-              : const CircularProgressIndicator(),
+              : buildShimmer(),
+    );
+  }
+
+  Widget buildShimmer() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50.0,
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          width: double.infinity,
+          height: 50.0,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

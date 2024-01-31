@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shimmer/shimmer.dart';
 
 class GoogleNativeAd extends StatefulWidget {
-  const GoogleNativeAd({super.key, required this.adUitId});
-  final String adUitId;
+  const GoogleNativeAd(
+    {
+      super.key,
+      required this.adUitId,
+      required this.templateType
+    }
+  );
   
+  final String adUitId;
+  final TemplateType templateType;
 
   @override
   State<GoogleNativeAd> createState() => _GoogleNativeAdState();
@@ -15,7 +23,7 @@ class _GoogleNativeAdState extends State<GoogleNativeAd> {
   bool _isNativeAdLoaded = false;
   bool _isLoading = false;
 
-  void loadAd(){
+  void loadAd() {
     _isLoading = true;
     _nativeAd = NativeAd(
       adUnitId: widget.adUitId,
@@ -36,7 +44,8 @@ class _GoogleNativeAdState extends State<GoogleNativeAd> {
         },
       ),
       request: const AdRequest(),
-      nativeTemplateStyle: NativeTemplateStyle(templateType: TemplateType.medium),
+      nativeTemplateStyle:
+          NativeTemplateStyle(templateType: TemplateType.medium),
     );
     _nativeAd?.load();
   }
@@ -57,18 +66,35 @@ class _GoogleNativeAdState extends State<GoogleNativeAd> {
   Widget build(BuildContext context) {
     return Container(
       child: _isNativeAdLoaded
-      ? Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxHeight: 380,
-              maxWidth: 380,
-              minWidth: 320,
-              minHeight: 320
-            ),
-            child: AdWidget(ad: _nativeAd!)
-          ),
-        ): _isLoading ? const CircularProgressIndicator() : const SizedBox(),
-      );
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      maxHeight: 380,
+                      maxWidth: 380,
+                      minWidth: 320,
+                      minHeight: 320),
+                  child: AdWidget(ad: _nativeAd!)),
+            )
+          : _isLoading
+              ? buildShimmer()
+              : const SizedBox(),
+    );
+  }
+
+  Widget buildShimmer() {
+    return SizedBox(
+      width: double.infinity,
+      height: 100.0,
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[400]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          width: double.infinity,
+          height: 100.0,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }

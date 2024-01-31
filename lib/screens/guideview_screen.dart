@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quitsmoke/Services/Ads/ads_service.dart';
 import 'package:quitsmoke/constants.dart';
 import 'package:quitsmoke/size_config.dart';
@@ -81,17 +82,23 @@ class _GuideViewScreenState extends State<GuideViewScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          buildHeader(context),
-          for (int index = 0; index < content.length + content.length ~/ 2; index++)
-            index % 3 == 2 ? 
-              AdsService().nativeAd :
-            buildTextContainer(
-              context,
-              content[index - index ~/ 3]['title'],
-              content[index - index ~/ 3]['text']
+          Expanded(
+            child: ListView(
+              children: [
+                buildHeader(context),
+                for (int index = 0; index < content.length + content.length ~/ 2; index++)
+                  index % 3 == 2 ? AdsService().nativeAd(templateType: TemplateType.medium) :
+                  buildTextContainer(
+                    context,
+                    content[index - index ~/ 3]['title'],
+                    content[index - index ~/ 3]['text']
+                  ),
+              ],
             ),
+          ),
+          AdsService().bannerAd
         ],
       ),
     );
