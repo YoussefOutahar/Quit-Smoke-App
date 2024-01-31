@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:quitsmoke/Services/Ads/ads_service.dart';
 import 'package:quitsmoke/notification_manager.dart';
 import 'package:quitsmoke/screens/splash_screen.dart';
 import 'package:quitsmoke/theme.dart';
@@ -14,6 +16,7 @@ import 'package:timezone/timezone.dart' as tz;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  AdsService().init();
   await prepare();
 
   runApp(MyApp());
@@ -47,8 +50,7 @@ class MyApp extends StatelessWidget {
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
 
-        if (!currentFocus.hasPrimaryFocus &&
-            currentFocus.focusedChild != null) {
+        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
           FocusManager.instance.primaryFocus!.unfocus();
         }
       },
