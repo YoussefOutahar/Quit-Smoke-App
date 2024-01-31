@@ -106,12 +106,23 @@ class _HomeScreenState extends State<HomeScreen> {
         "${langs[lang]["guide"]["managecravings"]["title"]}",
       ),
       onPressed: () async {
-        await AdsService().loadInterstitial();
-
-        Navigator.of(context).pop();
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return GuideViewScreen(id: "managecravings", lang: lang);
-        }));
+        _showLoadingDialog(context);
+        await AdsService().loadInterstitial(
+          onAdLoaded: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return GuideViewScreen(id: "managecravings", lang: lang);
+            }));
+          },
+          onAdFailedToLoad: (error) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return GuideViewScreen(id: "managecravings", lang: lang);
+            }));
+          }
+        );
       },
     );
     Widget continueButton = TextButton(
@@ -548,6 +559,33 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       actions: [],
+    );
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: SizedBox(
+            width: 100,
+            child: IntrinsicWidth(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(
+                    strokeWidth: 7,
+                  ), // Loading indicator
+                  SizedBox(height: 10),
+                  Text("Loading..."), // Loading text
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
