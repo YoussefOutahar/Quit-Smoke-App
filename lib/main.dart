@@ -12,6 +12,9 @@ import 'package:quitsmoke/theme.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'Services/Ads/AppOpen/app_lifecycle_reactor.dart';
+import 'Services/Ads/AppOpen/app_open_manager.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -40,7 +43,36 @@ Future<void> _configureLocalTimeZone() async {
   tz.setLocalLocation(tz.getLocation(timeZoneName));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  late AppLifecycleReactor appLifecycleReactor;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    appLifecycleReactor.listenToAppStateChanges();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    appLifecycleReactor = AppLifecycleReactor(
+      appOpenAdManager: AppOpenAdManager()..loadAd(),
+    );
+    appLifecycleReactor.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
